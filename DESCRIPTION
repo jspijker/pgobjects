@@ -1,0 +1,10 @@
+Package: pgobjects
+Type: Package
+Title: R objects in postgresql
+Version: 0.0.1
+Date: 2013-03-15
+Author: Vectrun
+Maintainer: Vectrun <vectrun@gmail.com>
+Description: Package for maintaining R objects within in postgresql database 
+License: GPL-3
+LazyLoad: yes
