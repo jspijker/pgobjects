@@ -1,5 +1,10 @@
 
-PgObjectsInit <- function(dsn,user=NA,dbhandle="dbh",schema="public") {
+
+PgObjectsInit <- function(dbname,user=NA,host="localhost",passwd=NA,dbhandle="dbh",schema="public") {
+
+	if(!is.character(dbname)) {
+		stop("dsn is not character")
+	}
 
 	if(is.na(user)) {
 		user=Sys.getenv("LOGNAME")
@@ -9,8 +14,12 @@ PgObjectsInit <- function(dsn,user=NA,dbhandle="dbh",schema="public") {
 		stop("user is not character")
 	}
 
-	if(!is.character(dsn)) {
-		stop("dsn is not character")
+	if(!is.character(host)) {
+		stop("hostname is not character")
+	}
+
+	if(!is.na(passwd)&&!is.character(passwd)) {
+		stop("passwd is not character")
 	}
 
 	if(!is.character(dbhandle)) {
@@ -33,5 +42,4 @@ PgObjectsInit <- function(dsn,user=NA,dbhandle="dbh",schema="public") {
 	options("pgobject.user"=user)
 
 }
-
 
