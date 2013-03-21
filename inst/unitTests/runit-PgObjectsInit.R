@@ -37,7 +37,7 @@ test.PgObjectsInit<-function() {
 	checkIdentical(getOption("pgobject.dbhandle"),"testdbhandle")
 	checkIdentical(getOption("pgobject.schema"),"testschema")
 	checkIdentical(exists("testdbhandle"),TRUE)
-	checkIdentical(class(testdbhandle)[1],"PostgreSQLConnection")
+	checkIdentical(dbGetInfo(testdbhandle)$dbname,getOption("pgobj.dbname"))
 	dbDisconnect(dbh)
 
 }
