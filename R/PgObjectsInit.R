@@ -1,13 +1,15 @@
 
 
-PgObjectsInit <- function(dbname,user=NA,host="localhost",passwd=NA,dbhandle="dbh",schema="public") {
+PgObjectsInit <- function(dbname,user=NA,host="localhost",
+						  passwd="",dbhandle="dbh",
+						  schema="public") {
 
 	if(!is.character(dbname)) {
 		stop("dsn is not character")
 	}
 
 	if(is.na(user)) {
-		user=Sys.getenv("LOGNAME")
+		user <- Sys.info()["user"]
 	}
 
 	if(!is.character(user)) {
@@ -18,7 +20,7 @@ PgObjectsInit <- function(dbname,user=NA,host="localhost",passwd=NA,dbhandle="db
 		stop("hostname is not character")
 	}
 
-	if(!is.na(passwd)&&!is.character(passwd)) {
+	if(!is.character(passwd)) {
 		stop("passwd is not character")
 	}
 
@@ -30,9 +32,11 @@ PgObjectsInit <- function(dbname,user=NA,host="localhost",passwd=NA,dbhandle="db
 	}
 
 	# connect:
+	drv <- dbDriver("PostgreSQL")
+	dbh <- dbConnect(drv,dbname=dbname,user=user,
+					 host=host,password=passwd)
 
-	# try(odbcCloseAll())
-	# assign(dbhandle,odbcConnect(Rdsn),envir=.GlobalEnv)
+	assign(dbhandle,dbh,envir=.GlobalEnv)
 
 	# test connection
 
