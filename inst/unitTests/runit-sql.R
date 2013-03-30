@@ -21,8 +21,14 @@ test.sql<-function() {
     checkIdentical(as.character(res$field[1]),"1")
 
 	# stest invalid query
-    res<-sql("select nonexistingfield from nonexistingtable")
+    res<-sql("select nonexistingfield from nonexistingtable",
+			 verbose=TRUE)
 	checkTrue(is.na(res))
+
+	# test ignore DBI warnings
+	res<-sql("select * from pg_user limit 0")
+	checkTrue(is.data.frame(res))
+
 
 	#close db 
 	dbDisconnect(dbh)

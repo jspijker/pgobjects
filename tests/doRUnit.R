@@ -20,6 +20,12 @@ if(require("RUnit", quietly=TRUE)) {
 
 	library(package=pkg, character.only=TRUE)
 
+	## set options
+
+	ro <- getOption("RUnit")
+	ro$silent=TRUE
+	options("RUnit"=ro)
+
 	## If desired, load the name space to allow testing of private
 	## functions
 	## if (is.element(pkg, loadedNamespaces()))

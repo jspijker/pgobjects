@@ -39,29 +39,20 @@ sql <- function(query,verbose=FALSE,errors=TRUE, dbhandle=NA) {
 		stop("error is not logical")
 	}
 
-	# print(class(ldbh))
-	# print(typeof(ldbh))
-
-	#odbcClearError(ldbh);
-
 	if (verbose) {
 		cat("Executing SQL: ",query,"\n")
 	}
 
-	# call sqlQuery, we do the error handling by ourselves, so
-	# errors=FALSE
+	#if query returns error we return NULL
+	qry <- tryCatch(dbSendQuery(ldbh,query),
+					error=function(w) return(NULL))
 
-	t<-system.time(res <- tryCatch(dbGetQuery(ldbh,statement=query),
-				   warning=function(w) NA
-				   ))
-
-
-	if (!is.list(res)&&is.na(res)) {
-		warning("execution of query failed")
-	}
-
-	if (verbose) {
-		cat("time elapsed: ",t,"\n")
+	if(!is.null(qry)) {
+		# query is ok (but we ignore drivers warnings)
+		res <- fetch(qry,n=-1)
+	} else {
+		# query returned error
+		res <- NA
 	}
 
 	invisible (res)

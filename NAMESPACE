@@ -1,2 +1,4 @@
 export(PgObjectsInit)
 export(sql)
+export(createPgobjTables)
+export(tableExists)

@@ -1,6 +1,5 @@
 
-createPgobjTables <- function(schema=getOption("pgobjects.schema"), 
-							  delete=FALSE) {
+createPgobjTables <- function(schema="public", delete=FALSE) {
 
 	# flow:
 
@@ -11,6 +10,21 @@ createPgobjTables <- function(schema=getOption("pgobjects.schema"),
 
 	# create robjects, use createquery
 	# if needed, grant user rights (user must be superuser?)
+
+	if(!is.character(schema)) {
+		stop("schema is not character")
+	}
+
+	if(!is.logical(delete)) {
+		stop("delete is not logical")
+	}
+
+
+
+	if(!delete&&tableExists(paste(schema,".robjects",sep=''))){
+		stop("table already exists and delete=TRUE")
+	}
+
 
 
 	createqry<-"
