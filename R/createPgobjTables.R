@@ -20,25 +20,6 @@ destroyPgobjTables <- function(schema=getOption("pgobject.schema")) {
 
 }
 
-#   grantqry  <- "
-
-#   BEGIN;
-#   GRANT all ON TABLE public.robjects to postgres;
-#   GRANT all ON SEQUENCE public.robjects_seq to postgres;
-
-#   GRANT all ON TABLE public.rdata to postgres;
-#   GRANT all ON SEQUENCE public.rdata_seq to postgres;
-
-#   GRANT all ON TABLE public.did to postgres;
-#   GRANT all ON SEQUENCE public.did_seq to postgres;
-
-
-#   commit;
-#   "
-#   
-
-
-
 createPgobjTables <- function(schema=getOption("pgobject.schema"), delete=FALSE) {
 
 	# flow:

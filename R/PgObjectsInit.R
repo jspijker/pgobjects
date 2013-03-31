@@ -2,7 +2,7 @@
 
 PgObjectsInit <- function(dbname,user=NA,host="localhost",
 						  passwd="",dbhandle="dbh",
-						  schema="public") {
+						  schema="public",chunksize=7168) {
 
 	if(!is.character(dbname)) {
 		stop("dsn is not character")
@@ -31,6 +31,11 @@ PgObjectsInit <- function(dbname,user=NA,host="localhost",
 		stop("schema is not character")
 	}
 
+	if(!is.numeric(chunksize)) {
+		stop("chunksize is not numeric")
+	}
+
+
 	# connect:
 	drv <- dbDriver("PostgreSQL")
 	dbh <- dbConnect(drv,dbname=dbname,user=user,
@@ -44,6 +49,7 @@ PgObjectsInit <- function(dbname,user=NA,host="localhost",
 	options("pgobject.dbhandle"=dbhandle)
 	options("pgobject.schema"=schema)
 	options("pgobject.user"=user)
+	options("pgobject.chunksize"=chunksize)
 
 }
 

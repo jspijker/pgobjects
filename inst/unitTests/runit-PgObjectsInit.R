@@ -23,6 +23,7 @@ test.PgObjectsInit<-function() {
 	checkException(PgObjectsInit(dbname="string",password=1))
 	checkException(PgObjectsInit(dbname="string",schema=1))
 	checkException(PgObjectsInit(dbname="string",dbschema=1))
+	checkException(PgObjectsInit(dbname="string",chunksize="a"))
 
 	PgObjectsInit(dbname=getOption("pgobj.dbname"),
 				  passwd=getOption("pgobj.password"))
