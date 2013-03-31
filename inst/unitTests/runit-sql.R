@@ -29,6 +29,14 @@ test.sql<-function() {
 	res<-sql("select * from pg_user limit 0")
 	checkTrue(is.data.frame(res))
 
+	# test null query / create table
+	res <- sql("drop table public.pgobjtest") # remove table in case it exists
+	res <- sql("create table public.pgobjtest (test integer);",verbose=TRUE)
+	checkTrue(is.null(res))
+	checkTrue(tableExists("public.pgobjtest"))
+	res <- sql("drop table public.pgobjtest")
+	checkTrue(!tableExists("public.pgobjtest"))
+
 
 	#close db 
 	dbDisconnect(dbh)

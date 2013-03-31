@@ -45,17 +45,25 @@ sql <- function(query,verbose=FALSE,errors=TRUE, dbhandle=NA) {
 
 	#if query returns error we return NULL
 	qry <- tryCatch(dbSendQuery(ldbh,query),
-					error=function(w) return(NULL))
+					error=function(w) 0)
 
-	if(!is.null(qry)) {
-		# query is ok (but we ignore drivers warnings)
-		res <- fetch(qry,n=-1)
-	} else {
+	browser()
+
+	if (is.numeric(qry)) {
 		# query returned error
-		res <- NA
-	}
+		return(NA)
+	} 
 
-	invisible (res)
+	res <- tryCatch(fetch(qry,n=-1),
+					error=function(w) 0)
+
+	if (is.numeric(res)) {
+		# query is empty
+		return(NULL)
+	} 
+	
+	invisible(res)
+
 
 }
 
