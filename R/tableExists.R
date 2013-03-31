@@ -1,5 +1,4 @@
-tableExists <-
-function(table){
+tableExists <- function(table){
 	# function checks if table exists, returns TRUE if so, FALSE if
 	# otherwise
 
@@ -10,12 +9,10 @@ function(table){
 
     res<-sql(paste("select * from",table,"limit 0"),verbose=TRUE);
 
-	browser()
-
-    if(is.na(res)){
-        return(FALSE)
-    }else {
+    if(is.data.frame(res)) {
         return(TRUE)
+    }else {
+        return(FALSE)
     }
 }
 
