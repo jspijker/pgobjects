@@ -3,6 +3,16 @@ library(localoptions)
 library(RCurl)
 readOptions("~/.R.options")
 
+test.storeObjExceptions<-function() {
+	# check options
+	checkException(storeObj(1))
+	checkException(storeObj(1,test.obj))
+	checkException(storeObj("test.obj"))
+	checkException(storeObj("test.obj",test.obj,verbose="a"))
+	checkException(storeObj("test.obj",test.obj,persistent="a"))
+	checkException(storeObj("test.obj",test.obj,whendelete=1))
+	checkException(storeObj("test.obj",test.obj,overwrite="a"))
+}
 
 test.storeObj<-function() {
 
@@ -10,15 +20,6 @@ test.storeObj<-function() {
 				  passwd=getOption("pgobj.password"))
 
 	test.obj <- data.frame(x=rnorm(10),y=rnorm(10))
-# check options
-    checkException(storeObj(1))
-    checkException(storeObj(1,test.obj))
-    checkException(storeObj("test.obj"))
-    checkException(storeObj("test.obj",test.obj,verbose="a"))
-    checkException(storeObj("test.obj",test.obj,persistent="a"))
-    checkException(storeObj("test.obj",test.obj,whendelete=1))
-    checkException(storeObj("test.obj",test.obj,overwrite="a"))
-
 	# if tables exists, we don't want to mess with real tables
 	if(tableExists("public.robjects")) {
 		destroyPgobjTables()

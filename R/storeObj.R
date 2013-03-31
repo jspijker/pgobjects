@@ -41,10 +41,10 @@ storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 	    nextobj,",'",name,"');",sep='');
     sql(qry,v=verbose);
 
-    if(persistent) {
-	sql(paste("update robjects set persistent='t' where name='",
-		    name,"';",sep=''),v=verbose);
-    }
+	if(persistent) {
+		sql(paste("update robjects set persistent='t' where name='",
+				  name,"';",sep=''),v=verbose);
+	}
 
     if(!is.na(whendelete)) {
 	sql(paste("update robjects set whendelete='",whendelete,
