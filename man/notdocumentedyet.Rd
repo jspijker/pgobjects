@@ -15,6 +15,8 @@
 \alias{StoreObjToDb}
 \alias{StoreScriptToDb}
 \alias{UnSplitStr}
+\alias{createPgobjTables}
+\alias{destroyPgobjTables}
 
 %
 %

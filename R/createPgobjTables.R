@@ -1,5 +1,45 @@
+destroyPgobjTables <- function(schema=getOption("pgobject.schema")) {
 
-createPgobjTables <- function(schema="public", delete=FALSE) {
+	if(!is.character(schema)) {
+		stop("schema is not character")
+	}
+
+	dropqry<-"
+	drop SEQUENCE public.rdata_seq CASCADE;
+	drop TABLE public.rdata;
+	drop SEQUENCE public.robjects_seq CASCADE;
+	drop TABLE public.robjects;
+	drop SEQUENCE public.did_seq CASCADE;
+	"
+
+	qry<-gsub("public",schema,dropqry)
+	qry<-gsub("\t"," ",qry)
+	qry<-gsub("\n"," ",qry)
+	qry <- gsub(" +"," ",qry,perl=TRUE)
+	sql(dropqry,verbose=TRUE)
+
+}
+
+#   grantqry  <- "
+
+#   BEGIN;
+#   GRANT all ON TABLE public.robjects to postgres;
+#   GRANT all ON SEQUENCE public.robjects_seq to postgres;
+
+#   GRANT all ON TABLE public.rdata to postgres;
+#   GRANT all ON SEQUENCE public.rdata_seq to postgres;
+
+#   GRANT all ON TABLE public.did to postgres;
+#   GRANT all ON SEQUENCE public.did_seq to postgres;
+
+
+#   commit;
+#   "
+#   
+
+
+
+createPgobjTables <- function(schema=getOption("pgobject.schema"), delete=FALSE) {
 
 	# flow:
 
@@ -19,12 +59,13 @@ createPgobjTables <- function(schema="public", delete=FALSE) {
 		stop("delete is not logical")
 	}
 
-
-
-	if(!delete&&tableExists(paste(schema,".robjects",sep=''))){
-		stop("table already exists and delete=TRUE")
+	if(tableExists(paste(schema,".robjects",sep=''))){
+		if(delete) {
+			destroyPgobjTables(schema)
+		} else {
+			stop("table already exists and delete=TRUE")
+		}
 	}
-
 
 
 	createqry<-"
@@ -49,40 +90,21 @@ createPgobjTables <- function(schema="public", delete=FALSE) {
 							   );
 
 	CREATE SEQUENCE public.did_seq;
-	CREATE VIEW public.did as
-	SELECT nextval('public.did_seq') as did;
+	CREATE VIEW public.did as SELECT nextval('public.did_seq') as did;
 	commit;
 	"
-	grantqry  <- "
-
-	BEGIN;
-	GRANT all ON TABLE public.robjects to postgres;
-	GRANT all ON SEQUENCE public.robjects_seq to postgres;
-
-	GRANT all ON TABLE public.rdata to postgres;
-	GRANT all ON SEQUENCE public.rdata_seq to postgres;
-
-	GRANT all ON TABLE public.did to postgres;
-	GRANT all ON SEQUENCE public.did_seq to postgres;
-
-
-	commit;
-	"
-	destroyqry<-"
-	drop SEQUENCE public.rdata_seq CASCADE;
-	drop TABLE public.rdata;
-	drop SEQUENCE public.robjects_seq CASCADE;
-	drop TABLE public.robjects;
-	drop SEQUENCE public.did_seq CASCADE;
-	drop VIEW public.did;
-	"
-
 
 	qry<-gsub("public",schema,createqry)
 	qry<-gsub("\t"," ",qry)
 	qry<-gsub("\n"," ",qry)
 	qry <- gsub(" +"," ",qry,perl=TRUE)
-	return(qry)
+
+	res <- sql(qry)
+
+	if(!is.null(res)) {
+		res <- sql("abort")
+		stop("creating of pgobject tables failed")
+	}
 }
 
 

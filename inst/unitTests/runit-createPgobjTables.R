@@ -2,7 +2,7 @@ library(RPostgreSQL)
 library(localoptions)
 readOptions("~/.R.options")
 
-test.createPbobjTables <- function() {
+test.createPgobjTables <- function() {
 
 
 	PgObjectsInit(dbname=getOption("pgobj.dbname"),
@@ -11,16 +11,25 @@ test.createPbobjTables <- function() {
 # check options
     checkException(createPgobjTables(1))
     checkException(createPgobjTables("string",delete="a"))
+    checkException(destroyPgobjTables(1))
 
-	#assumption: tables do not exist
+	# if tables exists, we don't want to destroy real tables
+	if(tableExists("public.robjects")||
+	   tableExists("runitPgobj.robjects")) {
+		stop("test tables already exists, clean up database")
+	}
 
+	sql("abort")
 	# test create
 	createPgobjTables()
-	res<-sql(paste("select * from public.robjects limit 0"),errors=FALSE)
-	stopifnot(!is.na(res))
+	checkTrue(tableExists("public.robjects"))
 	#do not re-create tables if delete=FALSE (default)
     checkException(createPgobjTables())
 
+	#this should not give an error
+	createPgobjTables(delete=TRUE)
+
+	destroyPgobjTables()
 
 	# test non-existing schema
     checkException(createPgobjTables(schema="nonexistent"))
@@ -28,11 +37,9 @@ test.createPbobjTables <- function() {
 	# test other schema
 	sql("create schema runitPgobj")
 	createPgobjTables(schema="runitPgobj")
-	res<-sql(paste("select * from runitPgobj.robjects limit 0"),
-			 errors=FALSE)
-	stopifnot(!is.na(res))
-	sql("drop schema runitPgobj cascade")
+	checkTrue(tableExists("runitPgobj.robjects"))
 
+	sql("drop schema runitPgobj cascade")
 
 }
 

@@ -47,8 +47,6 @@ sql <- function(query,verbose=FALSE,errors=TRUE, dbhandle=NA) {
 	qry <- tryCatch(dbSendQuery(ldbh,query),
 					error=function(w) 0)
 
-	browser()
-
 	if (is.numeric(qry)) {
 		# query returned error
 		return(NA)
