@@ -1,7 +1,7 @@
 
 
 PgObjectsInit <- function(dbname,user=NA,host="localhost",
-						  passwd="",dbhandle="dbh",
+						  passwd="",dbhandle="dbh",port=5432,
 						  schema="public",chunksize=7168) {
 
 	if(!is.character(dbname)) {
@@ -35,11 +35,16 @@ PgObjectsInit <- function(dbname,user=NA,host="localhost",
 		stop("chunksize is not numeric")
 	}
 
+	if(!is.numeric(port)) {
+		stop("port is not numeric")
+	}
+
 
 	# connect:
 	drv <- dbDriver("PostgreSQL")
 	dbh <- dbConnect(drv,dbname=dbname,user=user,
-					 host=host,password=passwd)
+					 host=host,password=passwd,
+					 port=port)
 
 	assign(dbhandle,dbh,envir=.GlobalEnv)
 
