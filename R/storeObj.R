@@ -25,11 +25,12 @@ storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 
     str<-objToStr(obj);
     chunks<-splitStr(str);
+	hash <- digest(obj)
 
 	# test if object already exists
 	if (objectExists(name)) {
 		if(overwrite) {
-			deleteObj(name);
+			deleteObj(name)
 		} else {
 			stop("object already exists in database and overwrite=FALSE")
 		}
@@ -37,27 +38,27 @@ storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 
     nextobj<-sql("select did from did")$did;
 
-    qry<-paste("insert into robjects (did,name) values (",
-	    nextobj,",'",name,"');",sep='');
-    sql(qry,v=verbose);
+    qry<-paste("insert into robjects (did,name,hash) values (",
+	    nextobj,",'",name,"','",hash,"');",sep='');
+    sql(qry,verbose=verbose);
 
 	if(persistent) {
 		sql(paste("update robjects set persistent='t' where name='",
-				  name,"';",sep=''),v=verbose);
+				  name,"';",sep=''),verbose=verbose);
 	}
 
     if(!is.na(whendelete)) {
 	sql(paste("update robjects set whendelete='",whendelete,
-		    "' where name='",name,"';",sep=''),v=verbose);
+		    "' where name='",name,"';",sep=''),verbose=verbose);
     }
 
-    cat("storing data: ",name,"\n");
-    for (i in 1:length(chunks)) {
-	str<-chunks[i];
-	qry<-paste("insert into rdata (did,object,chunk) values ('",
-		nextobj,"','",str,"',",i,");",sep='');
-	sql(qry,verbose=verbose);
-    }
+	cat("storing data: ",name,"\n");
+	for (i in 1:length(chunks)) {
+		str<-chunks[i];
+		qry<-paste("insert into rdata (did,object,chunk) values ('",
+				   nextobj,"','",str,"',",i,");",sep='');
+		sql(qry,verbose=verbose);
+	}
 
 }
 
