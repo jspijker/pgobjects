@@ -31,6 +31,10 @@ test.getObjHash<-function() {
 
 	checkEquals(hash,res)
 
+	# check if NA is retuned when object does not exist
+	res <- getObjHash("nonxistentobject")
+	checkTrue(is.na(res))
+
 	destroyPgobjTables()
 	dbDisconnect(dbh)
 }
