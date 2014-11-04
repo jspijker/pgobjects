@@ -31,6 +31,10 @@ test.getObjId<-function() {
 
 	checkEquals(id,res)
 
+	# check if function returns NA in case of non existing obj
+	res <- getObjId("nonexistentobject")
+	checkTrue(is.na(res))
+
 	destroyPgobjTables()
 	dbDisconnect(dbh)
 }

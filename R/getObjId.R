@@ -8,8 +8,10 @@ getObjId <- function(name) {
 	res<-FALSE
 	d<-sql(paste("select id from robjects where
 				 name='",name,"'",sep=''))
-	if (nrow(d)==1) {
+	if (!is.na(d) && nrow(d)==1) {
 		res <- d$id[1]
+	} else {
+		res <- NA
 	}
 	return(res)
 }
