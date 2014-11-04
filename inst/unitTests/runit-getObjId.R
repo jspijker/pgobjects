@@ -1,15 +1,14 @@
 library(RPostgreSQL)
 library(localoptions)
 library(RCurl)
-library(digest)
 
 readOptions("~/.R.options")
 
-test.deleteObj.exceptions<-function() {
-	checkException(deleteObj(1))
+test.getObjIdExceptions<-function() {
+	checkException(getObjId(1))
 }
 
-test.deleteObj<-function() {
+test.getObjId<-function() {
 
 	PgObjectsInit(dbname=getOption("pgobj.dbname"),
 				  passwd=getOption("pgobj.password"))
@@ -25,11 +24,12 @@ test.deleteObj<-function() {
 	createPgobjTables()
 
 	test.obj <- data.frame(x=rnorm(10),y=rnorm(10))
-	checkTrue(!objectExists("test.obj"))
 	storeObj("test.obj",test.obj)
-	checkTrue(objectExists("test.obj"))
-	deleteObj("test.obj")
-	checkTrue(!objectExists("test.obj"))
+	res <- getObjId("test.obj")
+	d <- sql("select id from robjects where name='test.obj'")
+	id <- d$id[1]
+
+	checkEquals(id,res)
 
 	destroyPgobjTables()
 	dbDisconnect(dbh)

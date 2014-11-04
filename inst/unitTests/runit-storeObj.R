@@ -1,6 +1,8 @@
 library(RPostgreSQL)
 library(localoptions)
 library(RCurl)
+library(digest)
+
 readOptions("~/.R.options")
 
 test.storeObjExceptions<-function() {

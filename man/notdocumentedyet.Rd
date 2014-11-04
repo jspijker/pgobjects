@@ -5,7 +5,8 @@
 \alias{TableExist}
 \alias{DeleteObjFromDb}
 \alias{GetFileFromDb}
-\alias{GetObjFromDb}
+\alias{GetObj}
+\alias{GetObjId}
 \alias{GetScriptFromDb}
 \alias{ObjectExists}
 \alias{ObjToStr}
