@@ -7,6 +7,7 @@
 \alias{GetFileFromDb}
 \alias{GetObj}
 \alias{GetObjId}
+\alias{GetObjHash}
 \alias{GetScriptFromDb}
 \alias{ObjectExists}
 \alias{ObjToStr}
