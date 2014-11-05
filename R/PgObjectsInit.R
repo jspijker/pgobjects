@@ -39,6 +39,13 @@ PgObjectsInit <- function(dbname,user=NA,host="localhost",
 		stop("port is not numeric")
 	}
 
+	# load libraries
+	for (libs in c("RPostgreSQL","localoptions",
+				   "digest","RCurl","bitops")) {
+		if(!require(libs,character.only=TRUE)) {
+			stop(paste("library",libs,"not available"))
+		}
+	}
 
 	# connect:
 	drv <- dbDriver("PostgreSQL")
