@@ -23,18 +23,25 @@ objToStr <- function(obj) {
 storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 	whendelete=NA,overwrite=TRUE) {
 
-    str<-objToStr(obj);
-    chunks<-splitStr(str);
 	hash <- digest(obj)
 
-	# test if object already exists
+    	# test if object already exists
 	if (objectExists(name)) {
 		if(overwrite) {
-			deleteObj(name)
+			dbhash <- getObjHash(name)
+			if(dbhash==hash) {
+				cat("not storing data, object already in database\n")
+				return()
+			} else {
+				deleteObj(name)
+			}
 		} else {
 			stop("object already exists in database and overwrite=FALSE")
 		}
 	}
+
+	str<-objToStr(obj);
+    chunks<-splitStr(str);
 
     nextobj<-sql("select did from did")$did;
 
