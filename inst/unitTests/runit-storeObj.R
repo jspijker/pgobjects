@@ -40,8 +40,8 @@ test.storeObj<-function() {
 	checkException(storeObj("test.obj",test.obj,overwrite=FALSE))
 
 	# check persistent flag (implicit overwrite)
-	storeObj("test.obj",test.obj,persistent=TRUE)
-	res<-sql("select * from robjects where name='test.obj'")
+	storeObj("test2.obj",test.obj,persistent=TRUE)
+	res<-sql("select * from robjects where name='test2.obj'")
 	checkIdentical(res$persistent[1],TRUE)
 
 	destroyPgobjTables()
