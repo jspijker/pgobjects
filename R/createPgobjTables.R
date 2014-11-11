@@ -57,7 +57,7 @@ createPgobjTables <- function(schema=getOption("pgobject.schema"), delete=FALSE)
 								  id              integer PRIMARY KEY DEFAULT nextval('public.robjects_seq'),
 								  did             integer UNIQUE,
 								  name            varchar(250) UNIQUE NOT NULL,
-								  hash            varchar (40) UNIQUE NOT NULL,
+								  hash            varchar (40) NOT NULL,
 								  time            timestamp DEFAULT NOW(),
 								  persistent      boolean DEFAULT 'f',
 								  whendelete      timestamp DEFAULT NOW()+'24:00:00'
