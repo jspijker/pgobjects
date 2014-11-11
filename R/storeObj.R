@@ -47,7 +47,11 @@ storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 
     qry<-paste("insert into robjects (did,name,hash) values (",
 	    nextobj,",'",name,"','",hash,"');",sep='');
-    sql(qry,verbose=verbose);
+    res <- sql(qry,verbose=verbose);
+
+	if(!is.null(res)&&is.na(res)) {
+		stop("query returned error")
+	}
 
 	if(persistent) {
 		sql(paste("update robjects set persistent='t' where name='",
