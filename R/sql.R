@@ -6,6 +6,8 @@ sql <- function(query,verbose=FALSE,errors=TRUE, dbhandle=NA) {
 	# error
 	# dbhandle: name of database handle, must exist in .GlobalEnv
 
+	w <- simpleError("meh")
+
 
 	# check dbhandle
 	if(is.na(dbhandle)) {
@@ -43,12 +45,15 @@ sql <- function(query,verbose=FALSE,errors=TRUE, dbhandle=NA) {
 		cat("Executing SQL: ",query,"\n")
 	}
 
-	#if query returns error we return NULL
+	#if query returns error we return 0
 	qry <- tryCatch(dbSendQuery(ldbh,query),
-					error=function(w) 0)
+					error=function(w) w)
 
-	if (is.numeric(qry)) {
+	if (is.list(qry)) {
 		# query returned error
+		if(errors){
+			warning(paste(qry))
+		}
 		return(NA)
 	} 
 
