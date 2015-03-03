@@ -7,6 +7,7 @@ readOptions("~/.R.options")
 
 test.storeObjExceptions<-function() {
 	# check options
+	test.obj <- data.frame(x=rnorm(10),y=rnorm(10))
 	checkException(storeObj(1))
 	checkException(storeObj(1,test.obj))
 	checkException(storeObj("test.obj"))

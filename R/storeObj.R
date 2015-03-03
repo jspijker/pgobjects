@@ -23,6 +23,11 @@ objToStr <- function(obj) {
 storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 	whendelete=NA,overwrite=TRUE) {
 
+	if(!is.character(name)) {
+		stop("name is not character")
+	}
+
+
 	hash <- digest(obj)
 
     	# test if object already exists
