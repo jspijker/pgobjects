@@ -33,9 +33,9 @@ test.sql<-function() {
 	res <- sql("drop table public.pgobjtest") # remove table in case it exists
 	res <- sql("create table public.pgobjtest (test integer);",verbose=TRUE)
 	checkTrue(is.null(res))
-	checkTrue(tableExists("public.pgobjtest"))
+	checkTrue(tableExists("pgobjtest"))
 	res <- sql("drop table public.pgobjtest")
-	checkTrue(!tableExists("public.pgobjtest"))
+	checkTrue(!tableExists("pgobjtest"))
 
 
 	#close db 

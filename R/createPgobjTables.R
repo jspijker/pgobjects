@@ -40,11 +40,11 @@ createPgobjTables <- function(schema=getOption("pgobject.schema"), delete=FALSE)
 		stop("delete is not logical")
 	}
 
-	if(tableExists(paste(schema,".robjects",sep=''))){
+	if(tableExists("robjects")){
 		if(delete) {
 			destroyPgobjTables(schema)
 		} else {
-			stop("table already exists and delete=TRUE")
+			stop("table already exists and delete!=TRUE")
 		}
 	}
 

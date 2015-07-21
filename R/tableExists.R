@@ -7,7 +7,9 @@ tableExists <- function(table){
 		stop("table is not character")
 	}
 
-    res<-sql(paste("select * from",table,"limit 0"),verbose=TRUE);
+	s <- getOption("pgobject.schema")
+    res<-sql(paste("select * from ",s,".",table," limit 0",sep=''),
+			 verbose=TRUE);
 
     if(is.data.frame(res)) {
         return(TRUE)

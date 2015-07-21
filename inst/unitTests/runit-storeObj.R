@@ -24,7 +24,7 @@ test.storeObj<-function() {
 
 	test.obj <- data.frame(x=rnorm(10),y=rnorm(10))
 	# if tables exists, we don't want to mess with real tables
-	if(tableExists("public.robjects")) {
+	if(tableExists("robjects")) {
 		destroyPgobjTables()
 	}
 	sql("abort")

@@ -14,15 +14,16 @@ strToObj <- function(str) {
 
 getObj <- function(name) {
 
+	s <- getOption("pgobject.schema")
 	if(!objectExists(name)) {
 		msg<-paste("GetObjFromDb: object",name,"not found, stop.")
 		stop(msg)
 	}
 
-    did<-sql(paste("select did from robjects where name='",name,
+    did<-sql(paste("select did from ",s,".robjects where name='",name,
 	    "'",sep=''))$did
 
-    qry<-paste("select chunk, object from rdata where did=",
+    qry<-paste("select chunk, object from ",s,".rdata where did=",
 	    did," order by chunk",sep='')
     d<-sql(qry)
 

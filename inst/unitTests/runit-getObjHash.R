@@ -15,7 +15,7 @@ test.getObjHash<-function() {
 
 
 	# if tables exists, we don't want to mess with real data
-	if(tableExists("public.robjects")){
+	if(tableExists("robjects")){
 		destroyPgobjTables()
 	}
 

@@ -27,6 +27,8 @@ storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 		stop("name is not character")
 	}
 
+	s <- getOption("pgobject.schema")
+
 
 	hash <- digest(obj)
 
@@ -50,7 +52,7 @@ storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 
     nextobj<-sql("select did from did")$did;
 
-    qry<-paste("insert into robjects (did,name,hash) values (",
+    qry<-paste("insert into ",s,".robjects (did,name,hash) values (",
 	    nextobj,",'",name,"','",hash,"');",sep='');
     res <- sql(qry,verbose=verbose);
 
@@ -59,19 +61,19 @@ storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 	}
 
 	if(persistent) {
-		sql(paste("update robjects set persistent='t' where name='",
+		sql(paste("update ",s,".robjects set persistent='t' where name='",
 				  name,"';",sep=''),verbose=verbose);
 	}
 
     if(!is.na(whendelete)) {
-	sql(paste("update robjects set whendelete='",whendelete,
+	sql(paste("update ",s,".robjects set whendelete='",whendelete,
 		    "' where name='",name,"';",sep=''),verbose=verbose);
     }
 
 	cat("storing data: ",name,"\n");
 	for (i in 1:length(chunks)) {
 		str<-chunks[i];
-		qry<-paste("insert into rdata (did,object,chunk) values ('",
+		qry<-paste("insert into ",s,".rdata (did,object,chunk) values ('",
 				   nextobj,"','",str,"',",i,");",sep='');
 		sql(qry,verbose=verbose);
 	}

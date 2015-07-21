@@ -7,7 +7,10 @@ test.tableExist<-function() {
 	PgObjectsInit(dbname=getOption("pgobj.dbname"),
 				  passwd=getOption("pgobj.password"))
 
-    table<-"pg_user"
+
+
+	sql("create table testTableExists (id int);")
+    table<-"testTableExists"
 
 # checK without db connection
     checkException(tableExists(1))
@@ -15,6 +18,9 @@ test.tableExist<-function() {
 
     checkIdentical(tableExists(table),TRUE)
     checkIdentical(tableExists("ThisTableSurelyDoesNotExist"),FALSE)
+
+
+	sql("drop table testTableExists;")
 
 	dbDisconnect(dbh)
 }

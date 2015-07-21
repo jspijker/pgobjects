@@ -14,14 +14,14 @@ test.createPgobjTables <- function() {
     checkException(destroyPgobjTables(1))
 
 	# if tables exists, we don't want to destroy real tables
-	if(tableExists("public.robjects")) {
+	if(tableExists("robjects")) {
 		destroyPgobjTables()
 	}
 
 	sql("abort")
 	# test create
 	createPgobjTables()
-	checkTrue(tableExists("public.robjects"))
+	checkTrue(tableExists("robjects"))
 	#do not re-create tables if delete=FALSE (default)
     checkException(createPgobjTables())
 
@@ -35,11 +35,14 @@ test.createPgobjTables <- function() {
 
 	# test other schema
 	sql("create schema runitPgobj")
-	createPgobjTables(schema="runitPgobj")
-	checkTrue(tableExists("runitPgobj.robjects"))
+
+	options("pgobject.schema"="runitPgobj")
+	createPgobjTables()
+	checkTrue(tableExists("robjects"))
 
 	sql("drop schema runitPgobj cascade")
 	dbDisconnect(dbh)
+	options("pgobject.schema"="public")
 }
 
 
