@@ -19,6 +19,7 @@
 \alias{UnSplitStr}
 \alias{createPgobjTables}
 \alias{destroyPgobjTables}
+\alias{PgObjectsClose}
 
 %
 %
