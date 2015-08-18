@@ -27,6 +27,21 @@ storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 		stop("name is not character")
 	}
 
+	if(!is.logical(verbose)) {
+		stop("verbose is not logical")
+	}
+	if(!is.logical(persistent)) {
+		stop("persistent is not logical")
+	}
+
+	if(!is.logical(overwrite)) {
+		stop("overwrite is not logical")
+	}
+
+	if(!is.na(whendelete)&&!is.character(whendelete)) {
+		stop("whendelete is not character")
+	}
+
 	s <- getOption("pgobject.schema")
 
 

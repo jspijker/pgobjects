@@ -5,17 +5,17 @@ library(digest)
 
 readOptions("~/.R.options")
 
-test.storeObjExceptions<-function() {
-	# check options
-	test.obj <- data.frame(x=rnorm(10),y=rnorm(10))
-	checkException(storeObj(1))
-	checkException(storeObj(1,test.obj))
-	checkException(storeObj("test.obj"))
-	checkException(storeObj("test.obj",test.obj,verbose="a"))
-	checkException(storeObj("test.obj",test.obj,persistent="a"))
-	checkException(storeObj("test.obj",test.obj,whendelete=1))
-	checkException(storeObj("test.obj",test.obj,overwrite="a"))
-}
+# test.storeObjExceptions<-function() {
+#check options
+#     test.obj <- data.frame(x=rnorm(10),y=rnorm(10))
+#     checkException(storeObj(1))
+#     checkException(storeObj(1,test.obj))
+#     checkException(storeObj("test.obj"))
+#     checkException(storeObj("test.obj",test.obj,verbose="a"))
+#     checkException(storeObj("test.obj",test.obj,persistent="a"))
+#     checkException(storeObj("test.obj",test.obj,whendelete=1))
+#     checkException(storeObj("test.obj",test.obj,overwrite="a"))
+# }
 
 test.storeObj<-function() {
 
@@ -30,6 +30,17 @@ test.storeObj<-function() {
 	sql("abort")
 
 	createPgobjTables()
+
+	# check options
+	checkException(storeObj(1))
+	checkException(storeObj(1,test.obj))
+	checkException(storeObj("test.obj"))
+	checkException(storeObj("test.obj",test.obj,verbose="a"))
+	checkException(storeObj("test.obj",test.obj,verbose=1))
+	checkException(storeObj("test.obj",test.obj,persistent="a"))
+	checkException(storeObj("test.obj",test.obj,persistent=1))
+	checkException(storeObj("test.obj",test.obj,whendelete=1))
+	checkException(storeObj("test.obj",test.obj,overwrite="a"))
 
 	# check if record exists
 	storeObj("test.obj",test.obj)
