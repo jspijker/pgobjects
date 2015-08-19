@@ -24,6 +24,8 @@
 \alias{getKeyvalObj}
 \alias{getKeyval}
 \alias{getKey}
+\alias{deleteKey}
+\alias{deleteKeyObj}
 
 %
 %

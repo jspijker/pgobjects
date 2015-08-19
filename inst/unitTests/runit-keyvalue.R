@@ -110,10 +110,8 @@ test.getKey <- function() {
 				  passwd=getOption("pgobj.password"))
 
 
-	# if tables exists, we don't want to mess with real data
-	if(!tableExists("robjects")){
-		createPgobjTables()
-	}
+	destroyPgobjTables()
+	createPgobjTables()
 
 	test.obj <- data.frame(x=rnorm(10),y=rnorm(10))
 	storeObj("test",test.obj,overwrite=TRUE)
@@ -141,5 +139,72 @@ test.getKey <- function() {
 	destroyPgobjTables()
 	dbDisconnect(dbh)
 }
+
+test.deleteKey <- function() {
+
+	PgObjectsInit(dbname=getOption("pgobj.dbname"),
+				  passwd=getOption("pgobj.password"))
+
+
+	# if tables exists, we don't want to mess with real data
+	destroyPgobjTables()
+	createPgobjTables()
+
+	test.obj <- data.frame(x=rnorm(10),y=rnorm(10))
+	storeObj("test",test.obj)
+	objid <- getObjId("test")
+	storeKeyval("test",key="key1",val="val1")
+	storeKeyval("test",key="key2",val="val2")
+	# check exceptions
+
+    checkException(deleteKey(1))
+    checkException(deleteKey("test",1))
+    checkException(deleteKey(1,"key1"))
+
+	d <- getKeyvalObj("test")
+	checkTrue(nrow(d)==2)
+	deleteKey("test","key1")
+	d <- getKeyvalObj("test")
+	checkTrue(nrow(d)==1)
+
+
+	destroyPgobjTables()
+	dbDisconnect(dbh)
+}
+
+
+test.deleteKeyObj <- function() {
+
+	PgObjectsInit(dbname=getOption("pgobj.dbname"),
+				  passwd=getOption("pgobj.password"))
+
+
+	# if tables exists, we don't want to mess with real data
+	destroyPgobjTables()
+	createPgobjTables()
+
+	test.obj <- data.frame(x=rnorm(10),y=rnorm(10))
+	storeObj("test",test.obj)
+	objid <- getObjId("test")
+	storeKeyval("test",key="key1",val="val1")
+	storeKeyval("test",key="key2",val="val2")
+	storeKeyval("test",key="key3",val="val3")
+	# check exceptions
+
+    checkException(deleteKeyObj(1))
+
+	d <- getKeyvalObj("test")
+	checkTrue(nrow(d)==3)
+	deleteKeyObj("test")
+	d <- getKeyvalObj("test")
+	checkTrue(nrow(d)==0)
+
+
+	destroyPgobjTables()
+	dbDisconnect(dbh)
+}
+
+
+
 
 

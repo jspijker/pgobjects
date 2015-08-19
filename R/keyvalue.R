@@ -127,3 +127,47 @@ getKey <- function(key) {
 	names(onames) <- c("obj",key)
 	return(onames)
 }
+
+
+deleteKey <- function(obj,key) {
+	# delete specific key for obj
+	# obj: object name
+	# key: key
+
+	if (!is.character(obj)) {
+		stop("obj is not character")
+	}
+
+	if (!is.character(key)) {
+		stop("key is not character")
+	}
+
+	s <- getOption("pgobject.schema")
+	did <- getObjId(obj)
+	# check if key exists
+	d <- getKeyval(obj,key)
+	if(length(d)==0) {
+		warning(paste("key",key,"does not exists"))
+	} else {
+		qry <- paste("delete from ",s,".rkeyvalue where key='",
+					 key, "' and did=",did,";",sep='')
+					 sql(qry)
+	}
+}
+
+deleteKeyObj <- function(obj) {
+	# delete all keys for object
+	# obj: object name
+
+
+	if (!is.character(obj)) {
+		stop("obj is not character")
+	}
+
+	keys <- getKeyvalObj(obj)
+	for (i in keys$key) {
+		deleteKey(obj,i)
+	}
+}
+
+
