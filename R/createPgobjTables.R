@@ -5,6 +5,7 @@ destroyPgobjTables <- function(schema=getOption("pgobject.schema")) {
 	}
 
 	dropqry<-"
+	drop SEQUENCE public.rkeyvalue_seq CASCADE;
 	drop TABLE public.rkeyvalue;
 	drop SEQUENCE public.rdata_seq CASCADE;
 	drop TABLE public.rdata;
@@ -76,8 +77,9 @@ createPgobjTables <- function(schema=getOption("pgobject.schema"), delete=FALSE)
 	CREATE VIEW public.did as SELECT nextval('public.did_seq') as did;
 
 
+	CREATE SEQUENCE public.rkeyvalue_seq;
 	CREATE TABLE public.rkeyvalue (
-								  id            integer PRIMARY KEY DEFAULT nextval('public.robjects_seq'),
+								  id            integer PRIMARY KEY DEFAULT nextval('public.rkeyvalue_seq'),
 								  did			integer REFERENCES public.robjects(did),	
 								  key			varchar(40) NOT NULL,
 								  value			varchar(250) NOT NULL

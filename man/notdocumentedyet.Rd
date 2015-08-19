@@ -20,6 +20,10 @@
 \alias{createPgobjTables}
 \alias{destroyPgobjTables}
 \alias{PgObjectsClose}
+\alias{storeKeyval}
+\alias{getKeyvalObj}
+\alias{getKeyval}
+\alias{getKey}
 
 %
 %
