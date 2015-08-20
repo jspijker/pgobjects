@@ -65,7 +65,7 @@ storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 	str<-objToStr(obj);
     chunks<-splitStr(str);
 
-    nextobj<-sql("select did from did")$did;
+    nextobj<-sql(paste("select did from ",s,".did;",sep=''))$did;
 
     qry<-paste("insert into ",s,".robjects (did,name,hash) values (",
 	    nextobj,",'",name,"','",hash,"');",sep='');

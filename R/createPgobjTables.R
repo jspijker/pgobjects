@@ -18,7 +18,8 @@ destroyPgobjTables <- function(schema=getOption("pgobject.schema")) {
 	qry<-gsub("\t"," ",qry)
 	qry<-gsub("\n"," ",qry)
 	qry <- gsub(" +"," ",qry,perl=TRUE)
-	sql(dropqry)
+	cat("XXXX schema:",schema,"\n")
+	sql(qry,verbose=TRUE)
 
 }
 
