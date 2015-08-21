@@ -31,6 +31,11 @@ test.schema<-function() {
 	x<-getObj("test.obj")
 	x<-getObjId("test.obj")
 	storeKeyval("test.obj",key="key1",val="val1")
+	getKeyval(obj="test.obj",key="key1")
+	getKeyvalObj(obj="test.obj")
+	getKey(key="key1")
+	x <- getObjHash("test.obj")
+	deleteObj("test.obj")
 
 	destroyPgobjTables()
 	sql("drop schema pgtest CASCADE")
