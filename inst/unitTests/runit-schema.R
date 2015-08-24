@@ -28,14 +28,21 @@ test.schema<-function() {
 
 	# check options
 	storeObj("test.obj",test.obj)
+	checkTrue(objectExists("test.obj"))
 	x<-getObj("test.obj")
+	checkEquals(x,test.obj)
 	x<-getObjId("test.obj")
+	checkTrue(is.numeric(x))
 	storeKeyval("test.obj",key="key1",val="val1")
-	getKeyval(obj="test.obj",key="key1")
+	x <- getKeyval(obj="test.obj",key="key1")
+	checkTrue(x=="val1")
 	getKeyvalObj(obj="test.obj")
 	getKey(key="key1")
 	x <- getObjHash("test.obj")
 	deleteObj("test.obj")
+	x <- objectExists("test.obj")
+	checkTrue(!x)
+
 
 	destroyPgobjTables()
 	sql("drop schema pgtest CASCADE")
