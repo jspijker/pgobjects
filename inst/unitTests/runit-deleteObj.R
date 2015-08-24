@@ -31,6 +31,14 @@ test.deleteObj<-function() {
 	deleteObj("test.obj")
 	checkTrue(!objectExists("test.obj"))
 
+	storeObj("test2.obj",test.obj)
+	storeKeyval(obj="test2.obj",key="key1",val="val1")
+	did <- getObjId("test2.obj")
+	deleteObj("test2.obj")
+	d <- sql(paste("select * from rkeyvalue where did=",did,sep=''))
+	checkTrue(nrow(d)==0)
+	
+
 	destroyPgobjTables()
 	dbDisconnect(dbh)
 }

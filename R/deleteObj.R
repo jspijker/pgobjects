@@ -10,8 +10,11 @@ deleteObj <- function(name) {
     }
 
 	s <- getOption("pgobject.schema")
-    did<-sql(paste("select did from ",s,".robjects where name='",
-				   name, "'",sep=''))$did;
+    #did<-sql(paste("select did from ",s,".robjects where name='",
+	#			   name, "'",sep=''))$did;
+	did <- getObjId(name)
+	deleteKeyObj(name)
+
     qry<-paste("delete from rdata where did=",did,sep='');
     qry<-paste(qry,";\n","delete from robjects where name='",
 	    name,"'",sep='');
