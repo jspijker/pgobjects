@@ -36,6 +36,17 @@ test.storeKeyval<-function() {
 	d <- sql(qry)
 	checkIdentical(d$val[1],"val1")
 	
+	storeKeyval("test",key="key2",val="val2",overwrite=FALSE)
+	storeKeyval("test",key="key1",val="val3",overwrite=TRUE)
+	# check data
+	qry <- paste("select * from rkeyvalue where did=",objid,
+				 " and key='key1';",sep='')
+	d <- sql(qry)
+	checkIdentical(d$val[1],"val3")
+	qry <- paste("select * from rkeyvalue where did=",objid,
+				 " and key='key2';",sep='')
+	d <- sql(qry)
+	checkIdentical(d$val[1],"val2")
 	destroyPgobjTables()
 	#close db 
 	dbDisconnect(dbh)

@@ -41,7 +41,7 @@ storeKeyval <- function(obj,key,val,overwrite=FALSE) {
 	} else {
 		if(overwrite) {
 			qry <- paste("update ",s,".rkeyvalue set value='",val,
-						 "' where did=",did,";",sep='')
+						 "' where did=",did," and key='",key,"';",sep='')
 			print(qry)
 			sql(qry)
 		} else {
