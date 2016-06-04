@@ -85,6 +85,11 @@ storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 				  name,"';",sep=''),verbose=verbose);
 	}
 
+	if(isblob) {
+		sql(paste("update ",s,".robjects set isblob='t' where name='",
+				  name,"';",sep=''),verbose=verbose);
+	}
+
     if(!is.na(whendelete)) {
 	sql(paste("update ",s,".robjects set whendelete='",whendelete,
 		    "' where name='",name,"';",sep=''),verbose=verbose);
