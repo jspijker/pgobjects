@@ -40,12 +40,14 @@ test.storeObj<-function() {
 	checkException(storeObj("test.obj",test.obj,persistent=1))
 	checkException(storeObj("test.obj",test.obj,whendelete=1))
 	checkException(storeObj("test.obj",test.obj,overwrite="a"))
+	checkException(storeObj("test.obj",test.obj,isBlob="a"))
 
 	# check if record exists
 	storeObj("test.obj",test.obj)
 	res<-sql("select * from robjects where name='test.obj'")
 	checkTrue(nrow(res)==1)
 	checkIdentical(res$persistent[1],FALSE)
+	checkIdentical(res$isblob[1],FALSE)
 
 	# check exception when not to overwrite
 	checkException(storeObj("test.obj",test.obj,overwrite=FALSE))

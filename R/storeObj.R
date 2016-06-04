@@ -21,7 +21,7 @@ objToStr <- function(obj) {
 }
 
 storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
-	whendelete=NA,overwrite=TRUE) {
+	whendelete=NA,overwrite=TRUE,isblob=FALSE) {
 
 	if(!is.character(name)) {
 		stop("name is not character")
@@ -30,6 +30,11 @@ storeObj <- function(name,obj,verbose=FALSE,persistent=FALSE,
 	if(!is.logical(verbose)) {
 		stop("verbose is not logical")
 	}
+
+	if(!is.logical(isblob)) {
+		stop("verbose is not logical")
+    }
+
 	if(!is.logical(persistent)) {
 		stop("persistent is not logical")
 	}
