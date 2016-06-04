@@ -62,6 +62,7 @@ createPgobjTables <- function(schema=getOption("pgobject.schema"), delete=FALSE)
 								  hash            varchar (40) NOT NULL,
 								  time            timestamp DEFAULT NOW(),
 								  persistent      boolean DEFAULT 'f',
+								  isblob          boolean DEFAULT 'f',
 								  whendelete      timestamp DEFAULT NOW()+'24:00:00'
 								  );
 
