@@ -8,3 +8,4 @@ Maintainer: Vectrun <vectrun@gmail.com>
 Description: Package for maintaining R objects within in postgresql database 
 License: GPL-3
 LazyLoad: yes
+RoxygenNote: 6.0.1

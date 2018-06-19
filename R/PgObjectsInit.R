@@ -1,4 +1,21 @@
-
+#' Initialize pgobjects database connection
+#'
+#' Function to open connection to a database and returns a database handle
+#'
+#' This function opens a database connection using the postgresql
+#' driver. It returns a database handle which is used within other
+#' functions of the pgobjects package.
+#' 
+#' @param dbname Name of the database to connect to
+#' @param user Username
+#' @param host hostname, default 'localhost'
+#' @param passwd Password for the database (if any)
+#' @param dbhandle Name of the dbhandle in .Globalenv
+#' @param port Portnumber of database, defaults to 5432
+#' @param schema Which database schema to use, defaults to 'public'
+#' @param chunksize Chunksize, size of individual chunks 
+#'
+#' @export
 
 PgObjectsInit <- function(dbname,user=NA,host="localhost",
 						  passwd="",dbhandle="dbh",port=5432,

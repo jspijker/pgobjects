@@ -1,10 +1,27 @@
+#' SQL wraper function
+#'
+#' Wrapper function to execute sql queries on a postgres database
+#'
+#' this function is the workhorse of the pgobjects library, it runs
+#' sql queries at the RDBMS and returns the result. This function
+#' tries to catch any error and then returns NA. It is up to the user 
+#' to test te result of the function.
+#' 
+#' @returns the result of the SQL uery as a data.frame or NA in case of
+#' error
+#'
+#' @param query The SQL query
+#' @param verbose If true give verbose output
+#' @param errors If True give errors as warning
+#' @param dbhandle The database Handle, see #\code{\link{PgObjectsInit))
+#'
+#' @seealso \code{\link{PgObjectsInit}}
+#'
+#' @export
+
+
+
 sql <- function(query,verbose=FALSE,errors=TRUE, dbhandle=NA) {
-	# this function is the workhorse of the pgobjects library, it runs
-	# sql queries at the RDBMS and returns the result.
-	# verbose: verbose messages
-	# errors: if true, do some error handling, if false just return
-	# error
-	# dbhandle: name of database handle, must exist in .GlobalEnv
 
 	w <- simpleError("meh")
 
