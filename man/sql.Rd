@@ -12,6 +12,12 @@ sql(query, verbose = FALSE, errors = TRUE, dbhandle = NA)
 \item{verbose}{If true give verbose output}
 
 \item{errors}{If True give errors as warning}
+
+\item{dbhandle}{The database Handle, see #' \code{\link{PgObjectsInit}}}
+}
+\value{
+the result of the SQL uery as a data.frame or NA in case of
+error
 }
 \description{
 Wrapper function to execute sql queries on a postgres database
