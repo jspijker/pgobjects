@@ -13,7 +13,7 @@ test.PgObjectsClose<-function() {
 
 	#test connection
 	tab <- dbListTables(dbh)
-	checkTrue(length(tab)>0)
+	checkTrue(is.character(tab))
 	PgObjectsClose()
 	checkException(dbListTables(dbh))
 	
