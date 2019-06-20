@@ -44,9 +44,7 @@ test.schema<-function() {
 	checkTrue(!x)
 
 	storeObj("test2.obj",test.obj,isblob=TRUE)
-    x <- isBlob("test2.obj")
-    print("XXXXXX")
-    print(x)
+	x <- isBlob("test2.obj")
 	checkTrue(x)
 
 
