@@ -36,7 +36,6 @@ storeKeyval <- function(obj,key,val,overwrite=FALSE) {
 	if(nrow(d)==0) {
 	qry <- paste("insert into ",s,".rkeyvalue (did,key,value) values ('"
 				 ,did,"','",key,"','",val,"');",sep='')
-	print(qry)
 	sql(qry)
 	} else {
 		if(overwrite) {
