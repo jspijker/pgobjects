@@ -43,6 +43,12 @@ test.schema<-function() {
 	x <- objectExists("test.obj")
 	checkTrue(!x)
 
+	storeObj("test2.obj",test.obj,isblob=TRUE)
+    x <- isBlob("test2.obj")
+    print("XXXXXX")
+    print(x)
+	checkTrue(x)
+
 
 	destroyPgobjTables()
 	sql("drop schema pgtest CASCADE")
