@@ -5,19 +5,19 @@ storeKeyval <- function(obj,key,val,overwrite=FALSE) {
 	# value: value of key
 
 	if (!is.character(obj)) {
-		stop("obj is not character")
+		stop("storeKeyval: obj is not character")
 	}
 
 	if (!is.character(key)) {
-		stop("key is not character")
+		stop("storeKeyval: key is not character")
 	}
 
 	if (!is.character(val)) {
-		stop("val is not character")
+		stop("storeKeyval: val is not character")
 	}
 
 	if (!is.logical(overwrite)) {
-		stop("overwrite is not logical")
+		stop("storeKeyval: overwrite is not logical")
 	}
 
 	# get did
@@ -26,7 +26,7 @@ storeKeyval <- function(obj,key,val,overwrite=FALSE) {
 	s <- getOption("pgobject.schema")
 
 	if(is.na(did)) {
-		stop(paste("object",obj,"not found"))
+		stop(paste("storeKeyval: object",obj,"not found"))
 	}
 
 	# check if key exists
@@ -55,7 +55,7 @@ getKeyvalObj <- function(obj) {
 	# obj: object name
 
 	if (!is.character(obj)) {
-		stop("obj is not character")
+		stop("getKeyvalObj: obj is not character")
 	}
 
 	# get did
@@ -65,7 +65,7 @@ getKeyvalObj <- function(obj) {
 	s <- getOption("pgobject.schema")
 
 	if(is.na(did)) {
-		stop(paste("object",obj,"not found"))
+		stop(paste("getKeyvalObj: object",obj,"not found"))
 	}
 
 	qry <- paste("select key,value from ",s,".rkeyvalue where did=",
@@ -81,11 +81,11 @@ getKeyval <- function(obj,key) {
 	# key: key name
 
 	if (!is.character(obj)) {
-		stop("obj is not character")
+		stop("getKeyval: obj is not character")
 	}
 
 	if (!is.character(key)) {
-		stop("key is not character")
+		stop("getKeyval: key is not character")
 	}
 
 	d<-getKeyvalObj(obj);
@@ -99,7 +99,7 @@ getKey <- function(key) {
 	# key: key name
 
 	if (!is.character(key)) {
-		stop("key is not character")
+		stop("getKey: key is not character")
 	}
 
 	# get schema
@@ -134,11 +134,11 @@ deleteKey <- function(obj,key) {
 	# key: key
 
 	if (!is.character(obj)) {
-		stop("obj is not character")
+		stop("deleteKey: obj is not character")
 	}
 
 	if (!is.character(key)) {
-		stop("key is not character")
+		stop("deleteKey: key is not character")
 	}
 
 	s <- getOption("pgobject.schema")
@@ -160,7 +160,7 @@ deleteKeyObj <- function(obj) {
 
 
 	if (!is.character(obj)) {
-		stop("obj is not character")
+		stop("deleteKeyObj: obj is not character")
 	}
 
 	keys <- getKeyvalObj(obj)
